@@ -1,4 +1,4 @@
-import { CloseButton, Fade, Flex, Heading, Slide } from '@chakra-ui/react'
+import { Flex, Heading } from '@chakra-ui/react'
 
 type SubSidebarType = {
   name: string
@@ -16,6 +16,7 @@ const Header: React.FC<SubSidebarType> = ({ name }) => {
         as='h4'
         fontSize='xl'
         noOfLines={1}
+        textTransform='capitalize'
       >
       {name}
       </Heading>
@@ -26,12 +27,13 @@ const Header: React.FC<SubSidebarType> = ({ name }) => {
 const SubSidebar: React.FC<SubSidebarType> = ({ name, isOpen }) => {
   return (
     <Flex
+      position='absolute'
+      left={isOpen ? 20 : -250 }
       w={72}
       h='100%'
       p={4}
       bgColor='white'
-      borderLeftWidth='thin'
-      borderLeftStyle='solid'
+      transition='all 0.5s ease'
       flexDirection='column'
     >
       <Header

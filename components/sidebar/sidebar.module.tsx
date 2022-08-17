@@ -19,8 +19,8 @@ const Logo: NextComponentType = () => {
 }
 
 interface NavigationType extends MenuType {
-  whichOpen: number | null,
-  setWhichOpen: Dispatch<SetStateAction<number | null>>
+  whichOpen: number | undefined,
+  setWhichOpen: Dispatch<SetStateAction<number | undefined>>
   isOpen: boolean
   onToggle: () => void
 }
@@ -91,12 +91,18 @@ const Profile: NextComponentType = () => {
   )
 }
 
-const Sidebar: NextComponentType = () => {
+type SidebarType = {
+  whichOpen: number | undefined,
+  setWhichOpen: Dispatch<SetStateAction<number | undefined>>
+  isOpen: boolean
+  onToggle: () => void
+}
+
+const Sidebar: React.FC<SidebarType> = ({
+  isOpen, onToggle, whichOpen, setWhichOpen
+}) => {
   const { data } = Endpoint.fetch('/api/menu')
-  const { isOpen, onToggle } = useDisclosure()
-  const [whichOpen, setWhichOpen] = useState<number | null>(null)
-
-
+  
   return (
     <Flex>
       <Flex
@@ -105,7 +111,10 @@ const Sidebar: NextComponentType = () => {
         minH='100vh'
         maxH='100vh'
         p={4}
+        borderRightWidth='thin'
+        borderRightStyle='solid'
         bgColor='white'
+        zIndex={5}
         flexDirection='column'
         justifyContent='space-between'
       >
@@ -123,9 +132,9 @@ const Sidebar: NextComponentType = () => {
         <Profile />
       </Flex>
       {
-        data && isOpen &&
+        data &&
         <SubSidebar
-          name={data[whichOpen!].name}
+          name={whichOpen! >= 0 && data[whichOpen!].name}
           isOpen={isOpen}
         />
       }
