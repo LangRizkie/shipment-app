@@ -1,0 +1,22 @@
+[
+  { 
+    "icon": "Ri/RiStore2Line", 
+    "name": "dashboard" 
+  },
+  { 
+    "icon": "Ri/RiShip2Line", 
+    "name": "orders" 
+  },
+  { 
+    "icon": "Ri/RiShoppingBasket2Line", 
+    "name": "products" 
+  },
+  { 
+    "icon": "Ri/RiGroupLine", 
+    "name": "customers" 
+  },
+  { 
+    "icon": "Ri/RiLineChartLine", 
+    "name": "analytics" 
+  }
+]
