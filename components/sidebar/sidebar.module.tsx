@@ -1,11 +1,14 @@
-import { Avatar, Flex, IconButton, Tooltip, useDisclosure } from '@chakra-ui/react'
+import { Avatar, Flex, IconButton, Tooltip } from '@chakra-ui/react'
 import { NextComponentType } from 'next'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { MenuType } from '../../models/menu.module'
+import { MenuModel, MenuType } from '../../models/menu.module'
 import { Endpoint } from '../../modules/endpoint.module'
+import { setSidebarIndex, setSidebarState, sidebarIndex, sidebarState } from '../../stores/sidebar.redux'
+
 import Icon from '../../modules/icon.module'
 import SubSidebar from './subsidebar/subsidebar.module'
+import Link from 'next/link'
 
 const Logo: NextComponentType = () => {
   return (
@@ -19,42 +22,68 @@ const Logo: NextComponentType = () => {
 }
 
 interface NavigationType extends MenuType {
-  whichOpen: number | undefined,
-  setWhichOpen: Dispatch<SetStateAction<number | undefined>>
-  isOpen: boolean
-  onToggle: () => void
+  isSideBarOpen: boolean
+  sideBarIndex: number
 }
 
-const Navigation: React.FC<NavigationType> = ({
-  whichOpen, setWhichOpen, menu, isOpen, onToggle
-}) => {
+const Navigation: React.FC<NavigationType> = (
+  { menu, isSideBarOpen, sideBarIndex }
+) => {
+  const dispatch = useDispatch()
+
+  const onClickedMenu = (el: MenuModel, id: number) => {
+    if (!el.useSidebar) {
+      dispatch(setSidebarIndex(id))
+      dispatch(setSidebarState(false))
+      return
+    }
+
+    if (isSideBarOpen && sideBarIndex != id) {
+      dispatch(setSidebarState(false))
+
+      setTimeout(() => {
+        dispatch(setSidebarIndex(sideBarIndex == id ? undefined : id))
+        dispatch(setSidebarState(true))
+      }, 500)
+
+      return
+    }
+
+    dispatch(setSidebarIndex(sideBarIndex == id ? undefined : id))
+    dispatch(setSidebarState(!isSideBarOpen))
+  }
+
   return (
     <Flex
       flexDirection='column'
     >
       {
         menu.map((el, id) =>
-          <Tooltip
+          <Link
             key={id}
-            label={el.name}
-            placement='right'
-            hasArrow
+            href={el.url}
+            shallow
+            passHref
+            replace
           >
-            <IconButton
-              isActive={isOpen && (whichOpen == id)}
-              aria-label={el.name}
-              mb={id == menu.length - 1 ? 0 : 4}
-              icon={
-                <Icon icon={el.icon} />
-              }
-              onClick={() => {
-                setWhichOpen(id)
-
-                if (whichOpen == id || !isOpen)
-                  onToggle()
-              }}
-            />
-          </Tooltip>
+            <a>
+              <Tooltip
+                label={el.name}
+                placement='right'
+                hasArrow
+              >
+                <IconButton
+                  isActive={sideBarIndex != undefined && sideBarIndex == id}
+                  aria-label={el.name}
+                  mb={id == menu.length - 1 ? 0 : 4}
+                  icon={
+                    <Icon icon={el.icon} />
+                  }
+                  onClick={() => onClickedMenu(el, id)}
+                />
+              </Tooltip>
+            </a>
+          </Link>
         )
       }
     </Flex>
@@ -91,17 +120,10 @@ const Profile: NextComponentType = () => {
   )
 }
 
-type SidebarType = {
-  whichOpen: number | undefined,
-  setWhichOpen: Dispatch<SetStateAction<number | undefined>>
-  isOpen: boolean
-  onToggle: () => void
-}
-
-const Sidebar: React.FC<SidebarType> = ({
-  isOpen, onToggle, whichOpen, setWhichOpen
-}) => {
-  const { data } = Endpoint.fetch('/api/menu')
+const Sidebar: NextComponentType = () => {
+  const { data: menu } = Endpoint.fetch('/api/menu')
+  const isSideBarOpen: boolean = useSelector(sidebarState)
+  const sideBarIndex: number = useSelector(sidebarIndex)
   
   return (
     <Flex>
@@ -120,22 +142,20 @@ const Sidebar: React.FC<SidebarType> = ({
       >
         <Logo />
         {
-          data &&
+          menu &&
           <Navigation
-            whichOpen={whichOpen}
-            setWhichOpen={setWhichOpen}
-            menu={data}
-            isOpen={isOpen}
-            onToggle={onToggle}
+            menu={menu}
+            isSideBarOpen={isSideBarOpen}
+            sideBarIndex={sideBarIndex}
           />
         }
         <Profile />
       </Flex>
       {
-        data &&
+        menu &&
         <SubSidebar
-          name={whichOpen! >= 0 && data[whichOpen!].name}
-          isOpen={isOpen}
+          name={sideBarIndex! >= 0 && menu[sideBarIndex!].name}
+          isOpen={isSideBarOpen && menu[sideBarIndex!].useSidebar}
         />
       }
     </Flex>

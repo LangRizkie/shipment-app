@@ -5,9 +5,13 @@ export type MenuType = {
 export class MenuModel {
   icon: string
   name: string
+  url: string
+  useSidebar: boolean
 
-  constructor(json: { [x: string]: string }) {
-    this.icon = json['href']
-    this.name = json['rel']
+  constructor(json: { [x: string]: any }) {
+    this.icon = json['icon']
+    this.name = json['name']
+    this.url = json['url']
+    this.useSidebar = json['useSidebar']
   }
 }

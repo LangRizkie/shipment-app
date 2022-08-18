@@ -1,22 +1,32 @@
 [
   { 
     "icon": "Ri/RiStore2Line", 
-    "name": "dashboard" 
+    "name": "dashboard",
+    "url": "/",
+    "useSidebar": false
   },
   { 
     "icon": "Ri/RiShip2Line", 
-    "name": "orders" 
+    "name": "order",
+    "url": "/order",
+    "useSidebar": true
   },
   { 
     "icon": "Ri/RiShoppingBasket2Line", 
-    "name": "products" 
+    "name": "product",
+    "url": "/product",
+    "useSidebar": true
   },
   { 
     "icon": "Ri/RiGroupLine", 
-    "name": "customers" 
+    "name": "customer",
+    "url": "/customer",
+    "useSidebar": true
   },
   { 
     "icon": "Ri/RiLineChartLine", 
-    "name": "analytics" 
+    "name": "analytic",
+    "url": "/analytic",
+    "useSidebar": false 
   }
 ]

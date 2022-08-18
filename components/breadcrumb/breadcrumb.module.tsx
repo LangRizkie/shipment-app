@@ -1,5 +1,7 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, IconButton } from '@chakra-ui/react'
 import { NextComponentType } from 'next'
+
+import Icon from '../../modules/icon.module'
 
 const Breadcrumb: NextComponentType = () => {
   return (
@@ -8,7 +10,12 @@ const Breadcrumb: NextComponentType = () => {
       p={4}
       alignItems='center'
     >
-      Breadcrumb will be here
+      <IconButton
+        aria-label='Logo'
+        icon={
+          <Icon icon='Hi/HiArrowSmLeft' />
+        }
+      />
     </Flex>
   )
 }

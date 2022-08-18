@@ -1,0 +1,26 @@
+[
+  {
+    "name": "All",
+    "type": "DEFAULT"
+  },
+  {
+    "name": "T-Shirt",
+    "type": "TSHIRT"
+  },
+  {
+    "name": "short",
+    "type": "SHORT"
+  },
+  {
+    "name": "Sandal",
+    "type": "SANDAL"
+  },
+  {
+    "name": "Sneaker",
+    "type": "SNEAKER"
+  },
+  {
+    "name": "cap",
+    "type": "CAP"
+  }
+]

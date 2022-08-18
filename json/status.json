@@ -1,0 +1,58 @@
+[
+  {
+    "name": "All",
+    "type": "DEFAULT"
+  },
+  {
+    "name": "Stock",
+    "type": "STOCK"
+  },
+  {
+    "name": "Waiting Payment",
+    "type": "WAITING_PAYMENT"
+  },
+  {
+    "name": "Waiting Package",
+    "type": "WAITING_PACKAGE"
+  },
+  {
+    "name": "Waiting Courier",
+    "type": "WAITING_COURIER"
+  },
+  {
+    "name": "shipping",
+    "type": "SHIPPING"
+  },
+  {
+    "name": "shipped",
+    "type": "SHIPPED"
+  },
+  {
+    "name": "enable",
+    "type": "ENABLE"
+  },
+  {
+    "name": "disable",
+    "type": "DISABLE"
+  },
+  {
+    "name": "Out Stock",
+    "type": "OUT_STOCK"
+  },
+  {
+    "name": "canceled",
+    "type": "CANCELED"
+  },
+  {
+    "name": "failed",
+    "type": "FAILED"
+  },
+  {
+    "name": "return",
+    "type": "RETURN"
+  },
+  {
+    "name": "returned",
+    "type": "RETURNED"
+  }
+]

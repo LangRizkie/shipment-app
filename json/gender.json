@@ -1,0 +1,14 @@
+[
+  {
+    "name": "All",
+    "type": "DEFAULT"
+  },
+  {
+    "name": "Male",
+    "type": "MALE"
+  },
+  {
+    "name": "Female",
+    "type": "FEMALE"
+  }
+]
